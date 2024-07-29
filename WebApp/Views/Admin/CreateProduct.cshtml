@@ -63,37 +63,37 @@
         @using (Html.BeginForm("CreateProduct", "Admin", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
+
             <div class="form-group">
                 @Html.LabelFor(m => m.pro_name)
                 @Html.TextBoxFor(m => m.pro_name, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.pro_name)
             </div>
+
             <div class="form-group">
                 @Html.LabelFor(m => m.pro_price)
                 @Html.TextBoxFor(m => m.pro_price, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.pro_price)
             </div>
+
             <div class="form-group">
                 @Html.LabelFor(m => m.pro_desc)
                 @Html.TextBoxFor(m => m.pro_desc, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.pro_desc)
             </div>
+
+            <div class="form-group">
+                @Html.Label("Category")
+                @Html.DropDownList("pro_fk_cat", new SelectList(ViewBag.Categories, "cat_id", "cat_name"), "Select Category", new { @class = "form-control" })
+            </div>
+
             <div class="form-group">
                 @Html.LabelFor(m => m.pro_image)
                 @Html.TextBoxFor(m => m.pro_image, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.pro_image)
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.pro_fk_cat)
-                @Html.TextBoxFor(m => m.pro_fk_cat, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.pro_fk_cat)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.pro_fk_user)
-                @Html.TextBoxFor(m => m.pro_fk_user, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.pro_fk_user)
-            </div>
-            <button type="submit">Create</button>
+
+            <button type="submit" class="btn btn-primary">Create</button>
         }
     </div>
 </body>
