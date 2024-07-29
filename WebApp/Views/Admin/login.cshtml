@@ -1,6 +1,4 @@
-﻿@{
-    ViewBag.Title = "Login";
-}
+﻿@model WebApp.Models.LoginViewModel
 
 <!DOCTYPE html>
 <html>
@@ -87,20 +85,36 @@
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form method="post" action="/Account/Login">
+        @using (Html.BeginForm("Login", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required />
+                @Html.LabelFor(m => m.Username)
+                @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Username)
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required />
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password)
             </div>
             <button type="submit">Login</button>
-        </form>
+        }
+
         <div class="footer">
             <p>Don't have an account? <a href="/Account/Register">Register here</a></p>
         </div>
     </div>
+
+    <!-- JavaScript to handle alert on login failure -->
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            var loginFailedMessage = '@ViewBag.LoginFailed';
+            if (loginFailedMessage) {
+                alert(loginFailedMessage);
+            }
+        });
+    </script>
 </body>
 </html>
