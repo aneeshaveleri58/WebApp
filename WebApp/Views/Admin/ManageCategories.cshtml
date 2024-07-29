@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WebApp.Models.tbl_category>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Categories - My ASP.NET Application</title>
+    <style>
+        /* Your styles here */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Manage Categories</h1>
+        <a href="@Url.Action("CreateCategory", "Admin")" class="btn btn-primary">Add New Category</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category Name</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model)
+                {
+                    <tr>
+                        <td>@category.cat_name</td>
+                        <td>@category.cat_image</td>
+                        <td>
+                            <a href="@Url.Action("EditCategory", "Admin", new { id = category.cat_id })">Edit</a> |
+                            <a href="@Url.Action("DeleteCategory", "Admin", new { id = category.cat_id })">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -45,7 +45,10 @@ namespace WebApp.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// //////////////////////////////////////////////////////////////////////////////// Product //////////////////////////////
+        /// </summary>
+        /// <returns></returns>
         // GET: Admin/ManageProducts
         [HttpGet]
         public ActionResult CreateProduct()
@@ -120,7 +123,10 @@ namespace WebApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("ManageProducts");
         }
-
+        /// <summary>
+        /// //////////////////////////////////////////////////////////////////// Category ///////////////////////////////
+        /// </summary>
+        /// <returns></returns>
         // GET: Admin/ManageCategories
         [HttpGet]
         public ActionResult CreateCategory()
@@ -168,16 +174,14 @@ namespace WebApp.Controllers
         }
 
 
-
-
-
         public ActionResult ManageCategories()
         {
-            var categories = _context.tbl_category.ToList();
-            return View(categories);
+            var category = _context.tbl_category.ToList();
+            return View(category);
         }
 
 
+        // GET: Admin/EditCategory/5
         // GET: Admin/EditCategory/5
         public ActionResult EditCategory(int id)
         {
@@ -191,18 +195,38 @@ namespace WebApp.Controllers
 
         // POST: Admin/EditCategory/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult EditCategory(tbl_category category)
         {
             if (ModelState.IsValid)
             {
-                _context.Entry(category).State = EntityState.Modified;
-                _context.SaveChanges();
-                return RedirectToAction("ManageCategories");
+                try
+                {
+                   
+                    _context.Entry(category).State = EntityState.Modified;
+                    _context.SaveChanges();
+                    return RedirectToAction("ManageCategories");
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    // Handle validation errors
+                    foreach (var validationErrors in ex.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            ModelState.AddModelError("", validationError.ErrorMessage);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "An unexpected error occurred.");
+                }
             }
             return View(category);
         }
 
+
+        // GET: Admin/DeleteCategory/5
         // GET: Admin/DeleteCategory/5
         public ActionResult DeleteCategory(int id)
         {
@@ -216,13 +240,16 @@ namespace WebApp.Controllers
 
         // POST: Admin/DeleteCategory/5
         [HttpPost, ActionName("DeleteCategory")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteCategoryConfirmed(int id)
+        public ActionResult CategoryDeleteConfirmed(int id)
         {
             var category = _context.tbl_category.Find(id);
-            _context.tbl_category.Remove(category);
-            _context.SaveChanges();
+            if (category != null)
+            {
+                _context.tbl_category.Remove(category);
+                _context.SaveChanges();
+            }
             return RedirectToAction("ManageCategories");
         }
+
     }
 }

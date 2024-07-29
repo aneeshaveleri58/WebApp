@@ -1,0 +1,26 @@
+﻿@model WebApp.Models.tbl_category
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Category - My ASP.NET Application</title>
+    <style>
+        /* Your styles here */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Delete Category</h1>
+        <p>Are you sure you want to delete the category "@Model.cat_name"?</p>
+
+        @using (Html.BeginForm("CategoryDeleteConfirmed", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <button type="submit">Delete</button>
+            <a href="@Url.Action("ManageCategories", "Admin")" class="btn btn-secondary">Cancel</a>
+        }
+    </div>
+</body>
+</html>
