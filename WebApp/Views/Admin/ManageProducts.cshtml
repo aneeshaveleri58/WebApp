@@ -1,0 +1,82 @@
+﻿@model IEnumerable<WebApp.Models.tbl_product>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Products - My ASP.NET Application</title>
+    <style>
+        body {
+            background-color: white;
+            color: #333;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            color: #5e9dbd;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #5e9dbd;
+            color: white;
+        }
+
+        .actions {
+            text-align: center;
+        }
+
+            .actions a {
+                margin: 0 5px;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Manage Products</h1>
+        <div class="actions">
+            <a href="@Url.Action("CreateProduct", "Admin")" class="btn btn-primary">Create New Product</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <td>@product.pro_name</td>
+                        <td>@product.pro_price</td>
+                        <td>
+                            <a href="@Url.Action("EditProduct", "Admin", new { id = product.pro_id })">Edit</a> |
+                            <a href="@Url.Action("DeleteProduct", "Admin", new { id = product.pro_id })">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

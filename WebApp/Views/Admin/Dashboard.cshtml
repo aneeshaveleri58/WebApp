@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <style>
+        body {
+            background-color: white;
+            color: #333;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            color: #5e9dbd;
+            text-align: center;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .action-link {
+            background-color: #5e9dbd;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+            .action-link:hover {
+                background-color: #0033cc;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Admin Dashboard</h1>
+        <p>This is your dashboard where you can manage your application.</p>
+        <div class="actions">
+            <a class="action-link" href="@Url.Action("ManageUsers", "Admin")">Manage Users</a>
+            <a class="action-link" href="@Url.Action("ManageProducts", "Admin")">Manage Products</a>
+        </div>
+    </div>
+</body>
+</html>

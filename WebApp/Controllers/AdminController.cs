@@ -1,49 +1,98 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
-using WebApp.Models; // Ensure this namespace matches your project
+using WebApp.Models;
+using System.Data.Entity; // Ensure this namespace is included
 
 namespace WebApp.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly DBMarketEntities _context;
-
-        public AdminController()
-        {
-            _context = new DBMarketEntities(); // Initialize your DbContext
-        }
+        private DBMarketEntities _context = new DBMarketEntities();
 
         // GET: Admin/Login
-        [HttpGet]
-        public ActionResult Login()M
+        public ActionResult Login()
         {
-            return View(new LoginViewModel()); // Return the view with an empty ViewModel
+            return View();
         }
 
-        // POST: Admin/Login
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                // Check if user exists in the database
-                var user = _context.tbl_admin
-                    .FirstOrDefault(u => u.ad_username == model.Username && u.ad_password == model.Password);
-
-                if (user != null)
+                var admin = _context.tbl_admin
+                                    .FirstOrDefault(a => a.ad_username == model.Username && a.ad_password == model.Password);
+                if (admin != null)
                 {
-                    // User authenticated
-                    // You can set session variables or perform other actions here
-                    return RedirectToAction("Index", "Home"); // Redirect to home or another action
+                    return RedirectToAction("Dashboard");
                 }
-
-                // Authentication failed
-                ViewBag.LoginFailed = "Invalid username or password.";
+                else
+                {
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                }
             }
-
-            // Return the view with the model if validation fails
             return View(model);
+        }
+
+        // GET: Admin/Dashboard
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
+
+        // GET: Admin/ManageProducts
+        public ActionResult ManageProducts()
+        {
+            var products = _context.tbl_product.ToList();
+            return View(products);
+        }
+
+        // GET: Admin/EditProduct/5
+        public ActionResult EditProduct(int id)
+        {
+            var product = _context.tbl_product.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+
+        // POST: Admin/EditProduct/5
+        [HttpPost]
+        public ActionResult EditProduct(tbl_product product)
+        {
+            if (ModelState.IsValid)
+            {
+                //_context.Entry(product).State = EntityState.Modified; // Ensure this line is correct
+                //_context.SaveChanges();
+                return RedirectToAction("ManageProducts");
+            }
+            return View(product);
+        }
+
+        // GET: Admin/DeleteProduct/5
+        public ActionResult DeleteProduct(int id)
+        {
+            var product = _context.tbl_product.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+
+        // POST: Admin/DeleteProduct/5
+        [HttpPost, ActionName("DeleteProduct")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var product = _context.tbl_product.Find(id);
+            _context.tbl_product.Remove(product);
+            _context.SaveChanges();
+            return RedirectToAction("ManageProducts");
         }
     }
 }

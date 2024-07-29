@@ -1,0 +1,42 @@
+﻿@model WebApp.Models.tbl_product
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product - My ASP.NET Application</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Edit Product</h2>
+        @using (Html.BeginForm("EditProduct", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.pro_id)
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.pro_name)
+                @Html.TextBoxFor(m => m.pro_name, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.pro_price)
+                @Html.TextBoxFor(m => m.pro_price, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.pro_desc)
+                @Html.TextBoxFor(m => m.pro_desc, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.pro_image)
+                @Html.TextBoxFor(m => m.pro_image, new { @class = "form-control" })
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        }
+    </div>
+</body>
+</html>

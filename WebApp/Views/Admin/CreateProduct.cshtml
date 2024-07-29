@@ -1,0 +1,100 @@
+﻿@model WebApp.Models.tbl_product
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Product - My ASP.NET Application</title>
+    <style>
+        body {
+            background-color: white;
+            color: #333;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            color: #5e9dbd;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #5e9dbd;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 15px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+            button:hover {
+                background-color: #002a80;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Product</h1>
+        @using (Html.BeginForm("CreateProduct", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.LabelFor(m => m.pro_name)
+                @Html.TextBoxFor(m => m.pro_name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.pro_name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.pro_price)
+                @Html.TextBoxFor(m => m.pro_price, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.pro_price)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.pro_desc)
+                @Html.TextBoxFor(m => m.pro_desc, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.pro_desc)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.pro_image)
+                @Html.TextBoxFor(m => m.pro_image, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.pro_image)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.pro_fk_cat)
+                @Html.TextBoxFor(m => m.pro_fk_cat, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.pro_fk_cat)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.pro_fk_user)
+                @Html.TextBoxFor(m => m.pro_fk_user, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.pro_fk_user)
+            </div>
+            <button type="submit">Create</button>
+        }
+    </div>
+</body>
+</html>
